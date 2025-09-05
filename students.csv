@@ -1,4 +1,4 @@
-Name,Status,Picture
-John Doe,Active,
-Mary Johnson,Graduated,
-Ahmed Bello,Suspended,
+Name,Age,Address,Parent Phone,Status,Picture
+John Doe,12,123 Main St,08012345678,Paid,
+Mary Johnson,14,456 Oak Ave,08087654321,Not Paid,
+Ahmed Bello,13,789 Pine Rd,08011223344,Partially Paid,
