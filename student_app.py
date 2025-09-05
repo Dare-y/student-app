@@ -61,7 +61,7 @@ if not students.empty:
             if st.button(f"🗑️ Delete {row['Name']}", key=f"delete_{i}"):
                 students = students.drop(i).reset_index(drop=True)
                 students.to_csv(DATA_FILE, index=False)
-                st.experimental_rerun()
+                st.rerun()
 
     # --- Edit Form ---
     if "edit_index" in st.session_state:
@@ -98,6 +98,6 @@ if not students.empty:
                 students.to_csv(DATA_FILE, index=False)
                 st.success("Student updated successfully!")
                 del st.session_state["edit_index"]
-                st.experimental_rerun()
+                st.rerun()
 else:
     st.info("No students added yet.")
