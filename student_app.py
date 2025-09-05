@@ -13,16 +13,28 @@ else:
 
 st.title("🎓 Student Management System")
 
+# --- Initialize session state for form fields ---
+if "form_reset" not in st.session_state:
+    st.session_state.form_reset = False
+
 # --- Add Student Form ---
 st.subheader("📝 Add New Student")
 
-with st.form("student_form"):
-    name = st.text_input("Full Name")
-    age = st.number_input("Age", min_value=1, max_value=100, step=1)
-    address = st.text_area("Address")
-    parent_phone = st.text_input("Parent Phone Number")
-    status = st.selectbox("Payment Status", ["Paid", "Not Paid", "Partially Paid"])
-    picture = st.file_uploader("Upload Picture", type=["jpg", "png", "jpeg"])
+def reset_form():
+    st.session_state.name = ""
+    st.session_state.age = 0
+    st.session_state.address = ""
+    st.session_state.parent_phone = ""
+    st.session_state.status = "Paid"
+    st.session_state.picture = None
+
+with st.form("student_form", clear_on_submit=True):
+    name = st.text_input("Full Name", key="name")
+    age = st.number_input("Age", min_value=1, max_value=100, step=1, key="age")
+    address = st.text_area("Address", key="address")
+    parent_phone = st.text_input("Parent Phone Number", key="parent_phone")
+    status = st.selectbox("Payment Status", ["Paid", "Not Paid", "Partially Paid"], key="status")
+    picture = st.file_uploader("Upload Picture", type=["jpg", "png", "jpeg"], key="picture")
     submitted = st.form_submit_button("Add Student")
 
     if submitted and name and parent_phone:
@@ -40,6 +52,10 @@ with st.form("student_form"):
         students = pd.concat([students, new_student], ignore_index=True)
         students.to_csv(DATA_FILE, index=False)
         st.success(f"{name} added successfully!")
+
+        # Reset form fields
+        reset_form()
+        st.rerun()
 
 # --- Student Records ---
 st.subheader("📋 Student Records")
