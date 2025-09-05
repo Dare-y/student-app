@@ -17,18 +17,19 @@ st.title("🎓 Student Management System")
 if "form_reset" not in st.session_state:
     st.session_state.form_reset = False
 
+# --- Function to reset form fields ---
+def reset_form():
+    st.session_state["name"] = ""
+    st.session_state["age"] = 0
+    st.session_state["address"] = ""
+    st.session_state["parent_phone"] = ""
+    st.session_state["status"] = "Paid"
+    st.session_state["picture"] = None
+
 # --- Add Student Form ---
 st.subheader("📝 Add New Student")
 
-def reset_form():
-    st.session_state.name = ""
-    st.session_state.age = 0
-    st.session_state.address = ""
-    st.session_state.parent_phone = ""
-    st.session_state.status = "Paid"
-    st.session_state.picture = None
-
-with st.form("student_form", clear_on_submit=True):
+with st.form("student_form"):
     name = st.text_input("Full Name", key="name")
     age = st.number_input("Age", min_value=1, max_value=100, step=1, key="age")
     address = st.text_area("Address", key="address")
@@ -53,7 +54,7 @@ with st.form("student_form", clear_on_submit=True):
         students.to_csv(DATA_FILE, index=False)
         st.success(f"{name} added successfully!")
 
-        # Reset form fields
+        # Reset form fields and refresh
         reset_form()
         st.rerun()
 
